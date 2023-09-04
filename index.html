@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Toulouse Hyperspectral Data Set</title>
+        <meta charset="UTF-8" />
+        <meta name="referrer" content="none" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+        <link href="static/css/toulouse.at.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <header>
+        </header>
+
+        <nav>
+            <h3 class="navlink" id="sitename"><a href="">Toulouse Hyperspectral Data Set</a></h3>
+            <h3 class="navlink"><a href="https://camcatt.sedoo.fr/catalogue/" target="_blank">Data</a></h3>
+            <h3 class="navlink"><a href="#package">Python package</a></h3>
+            <h3 class="navlink"><a href="#paper">Paper</a></h3>
+        </nav>
+
+        <div class="banner">
+          <div class="banner-content">
+            <h1>Toulouse Hyperspectral Data Set</h1>
+            <div class="buttons">
+                <a href="https://camcatt.sedoo.fr/catalogue/" target="_blank" class="btn btn-light btn-left" role="button">Download data</a>
+                <a href="#" class="btn btn-light btn-left" role="button">Install Python package</a>
+                <a href="#" class="btn btn-light" role="button">Read paper</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="description">
+            <p>
+                The Toulouse Hyperspectral Data Set is the combination of 1) an airborne hyperspectral image acquired by the AisaFENIX sensor over Toulouse, France, during the <a href="https://www.sciencedirect.com/science/article/pii/S2352340923002287">CAMCATT-AI4GEO campaign</a> and of 2) a land cover ground truth, <b>provided with standard train / test splits for the validation of machine learning models</b> on various tasks such as semantic segmentation. </br> </br>
+
+                The image is provided in ground-level reflectance with <b>a very high spatial resolution (1 m ground sampling distance) and spectral resolution (< 12 nm) from 0.4 µm to 2.5 µm.</b> 
+
+                More than <b>380,000 pixels are sparsely labeled over an area of 90 km&#xB2;</b> with land cover classes (and secondarily with land use classes). The land cover nomenclature contains 32 classes hierarchically organized into 16 impermeable surfaces and 16 permeable surfaces as illustrated below:</br> </br>
+            </p>
+
+            <div class="nomenclature">
+                <img src="static/img/nomenclature.png" alt="Nomenclature" class="nomenclature-img"/>
+            </div>
+
+            <h2>Python package</h2>
+
+            <p>
+                A <a href="#" target="_blank">Python package</a> allows to easily build Pytorch data loaders and run experiments:
+            </p>
+
+            <div class="highlight">
+                <pre class="highlight">
+                    <span class="pl-k">from</span> tlse_hyp_data_set <span class="pl-k">import</span> TlseHypDataSet
+                    <span class="pl-k">from</span> tlse_hyp_data_set.utils.dataset <span class="pl-k">import</span> DisjointDataSplit
+
+                    dataset = <span class="pl-v">TlseHypDataSet</span>(<span class="pl-s">'/path/to/dataset/'</span>)
+                    <span class="pl-c"># Load the first standard ground truth split</span>
+                    ground_truth_split = <span class="pl-v">DisjointDataSplit</span>(dataset.standard_splits[0])
+                    train_loader = torch.utils.data.<span class="pl-v">DataLoader</span>(ground_truth_split.sets_[<span class="pl-s">'labeled'</span>], shuffle=<span class="pl-c1">True</span>, batch_size=<span class="pl-c1">1024</span>)
+
+                    <span class="pl-k">for</span> epoch <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">100</span>):
+                        &nbsp; <span class="pl-k">for</span> samples, labels <span class="pl-c1">in</span> train_loader:
+                            &nbsp; &nbsp; ...
+            </div>
+
+            <h2>Qualitative comparison</h2>
+
+            <p>
+                In our <a href="#" target="_blank">paper</a>, we qualitatively compared the data set of Toulouse to two publicly available hyperspectral data sets: <a href="https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes#Pavia_Centre_and_University", target="_blank">Pavia University</a> and <a href="https://hyperspectral.ee.uh.edu/?page_id=1075", target="_blank">Houston University</a>. In particular, we computed spatial and spectral hand-crafted features from 64 x 64 pixel patches, represented in the figure below through a t-SNE 2-dimensional transformation:
+            </p>
+
+            <div class="nomenclature">
+                <img src="static/img/proj.png" alt="Nomenclature" class="proj-img"/>
+            </div>
+
+            <!--
+            <div class="center">
+                <pre id="myPreTag">pip install TlseHypDataSet</pre>
+                <script src="copy.js"></script>
+            </div>
+
+             
+            <div class="center">
+                <pre>
+                    import torch
+                    from tlse_hyp_data_set import TlseHypDataSet
+                    from tlse_hyp_data_set.utils.dataset import spatial_disjoint_split
+                    from tlse_hyp_data_set.utils.preprocess import GaussianFilter
+
+                    dataset = TlseHypDataSet('/path/to/dataset/')
+                    # Load the first ground truth split
+                    ground_truth_split = DisjointDataSplit(dataset.default_splits[0])
+
+                    train_loader = torch.utils.data.DataLoader(split.sets_['labeled'], shuffle=False, batch_size=config['batch_size'], pin_memory=True)
+   
+                    for sample, labels in train_loader:
+                        ...
+                </pre>
+                <script src="copy.js"></script>
+            </div>
+        -->
+        </div>
+        
+
+
+
+        <footer>
+            Romain Thoreau - <a href="https://creativecommons.org/licenses/by-nc/2.0/fr/deed.en" target="_blank">CC-BY-NC 2.0</a> - 2022
+        </footer>
+
+    </body>
+</html>
