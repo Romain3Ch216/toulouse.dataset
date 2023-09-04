@@ -41,7 +41,7 @@
 
                 The image is provided in ground-level reflectance with <b>a very high spatial resolution (1 m ground sampling distance) and spectral resolution (< 12 nm) from 0.4 µm to 2.5 µm.</b> 
 
-                More than <b>380,000 pixels are sparsely labeled over an area of 90 km&#xB2;</b> with land cover classes (and secondarily with land use classes). The land cover nomenclature contains 32 classes hierarchically organized into 16 impermeable surfaces and 16 permeable surfaces as illustrated below:</br> </br>
+                More than <b>380,000 pixels are sparsely labeled with land cover classes</b> (and secondarily with land use classes) over an area of 90 km&#xB2;. The land cover nomenclature contains 32 classes hierarchically organized into 16 impermeable surfaces and 16 permeable surfaces as illustrated below:</br> </br>
             </p>
 
             <div class="nomenclature">
@@ -56,13 +56,14 @@
 
             <div class="highlight">
                 <pre class="highlight">
+                    <span class="pl-k">import</span> torch
                     <span class="pl-k">from</span> tlse_hyp_data_set <span class="pl-k">import</span> TlseHypDataSet
                     <span class="pl-k">from</span> tlse_hyp_data_set.utils.dataset <span class="pl-k">import</span> DisjointDataSplit
 
                     dataset = <span class="pl-v">TlseHypDataSet</span>(<span class="pl-s">'/path/to/dataset/'</span>)
                     <span class="pl-c"># Load the first standard ground truth split</span>
                     ground_truth_split = <span class="pl-v">DisjointDataSplit</span>(dataset.standard_splits[0])
-                    train_loader = torch.utils.data.<span class="pl-v">DataLoader</span>(ground_truth_split.sets_[<span class="pl-s">'labeled'</span>], shuffle=<span class="pl-c1">True</span>, batch_size=<span class="pl-c1">1024</span>)
+                    train_loader = torch.utils.data.<span class="pl-v">DataLoader</span>(ground_truth_split.sets_[<span class="pl-s">'train'</span>], shuffle=<span class="pl-c1">True</span>, batch_size=<span class="pl-c1">1024</span>)
 
                     <span class="pl-k">for</span> epoch <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">100</span>):
                         &nbsp; <span class="pl-k">for</span> samples, labels <span class="pl-c1">in</span> train_loader:
