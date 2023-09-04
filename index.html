@@ -79,32 +79,29 @@
                 <img src="static/img/proj.png" alt="Nomenclature" class="proj-img"/>
             </div>
 
-            <!--
-            <div class="center">
-                <pre id="myPreTag">pip install TlseHypDataSet</pre>
-                <script src="copy.js"></script>
-            </div>
+           <h2>Citation</h2>
 
-             
-            <div class="center">
-                <pre>
-                    import torch
-                    from tlse_hyp_data_set import TlseHypDataSet
-                    from tlse_hyp_data_set.utils.dataset import spatial_disjoint_split
-                    from tlse_hyp_data_set.utils.preprocess import GaussianFilter
+           <p>
+               If you use this data set, please cite <b>both</b> the <a href="https://www.sciencedirect.com/science/article/pii/S2352340923002287" target="_blank">CAMCATT-AI4GEO data paper</a> and the <a href="#" target="_blank">Toulouse Hyperspectral Data Set paper</a>.
+           </p>
 
-                    dataset = TlseHypDataSet('/path/to/dataset/')
-                    # Load the first ground truth split
-                    ground_truth_split = DisjointDataSplit(dataset.default_splits[0])
+           <div class="highlight">
+               <pre class="highlight">
+                    @article{ROUPIOZ2023109109,
+                    title = {Multi-source datasets acquired over Toulouse (France) in 2021 for urban microclimate studies during the CAMCATT/AI4GEO field campaign},
+                    journal = {Data in Brief},
+                    volume = {48},
+                    pages = {109109},
+                    year = {2023},
+                    issn = {2352-3409},
+                    doi = {https://doi.org/10.1016/j.dib.2023.109109},
+                    url = {https://www.sciencedirect.com/science/article/pii/S2352340923002287},
+                    author = {L. Roupioz and X. Briottet and K. Adeline and A. {Al Bitar} and D. Barbon-Dubosc and R. Barda-Chatain and P. Barillot and S. Bridier and E. Carroll and C. Cassante and A. Cerbelaud and P. Déliot and P. Doublet and P.E. Dupouy and S. Gadal and S. Guernouti and A. {De Guilhem De Lataillade} and A. Lemonsu and R. Llorens and R. Luhahe and A. Michel and A. Moussous and M. Musy and F. Nerry and L. Poutier and A. Rodler and N. Riviere and T. Riviere and J.L. Roujean and A. Roy and A. Schilling and D. Skokovic and J. Sobrino},
+                    keywords = {Land surface temperature, Spectral emissivity, Spectral reflectance, Air temperature, Airborne LiDAR, Atmospheric data, Urban area},
+                    }
+               </pre>
+           </div>
 
-                    train_loader = torch.utils.data.DataLoader(split.sets_['labeled'], shuffle=False, batch_size=config['batch_size'], pin_memory=True)
-   
-                    for sample, labels in train_loader:
-                        ...
-                </pre>
-                <script src="copy.js"></script>
-            </div>
-        -->
         </div>
         
 
