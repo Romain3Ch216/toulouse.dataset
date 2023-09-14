@@ -39,7 +39,7 @@
             <p>
                 The Toulouse Hyperspectral Data Set is the combination of 1) an airborne hyperspectral image acquired by the AisaFENIX sensor over Toulouse, France, during the <a href="https://www.sciencedirect.com/science/article/pii/S2352340923002287">CAMCATT-AI4GEO campaign</a> and of 2) a land cover ground truth, <b>provided with standard train / test splits for the validation of machine learning models</b> on various tasks such as semantic segmentation. </br> </br>
 
-                The image is provided in ground-level reflectance with <b>a very high spatial resolution (1 m ground sampling distance) and spectral resolution (< 12 nm) from 0.4 µm to 2.5 µm.</b> 
+                The image is provided in ground-level reflectance with <b>a very high spatial resolution (1 m ground sampling distance) and spectral resolution (< 8 nm) from 0.4 µm to 2.5 µm (310 channels).</b> 
 
                 More than <b>380,000 pixels are sparsely labeled with land cover classes</b> (and secondarily with land use classes) over an area of 90 km&#xB2;. The land cover nomenclature contains 32 classes hierarchically organized into 16 impermeable surfaces and 16 permeable surfaces as illustrated below:</br> </br>
             </p>
@@ -57,28 +57,40 @@
             <div class="highlight">
                 <pre class="highlight">
                     <span class="pl-k">import</span> torch
-                    <span class="pl-k">from</span> tlse_hyp_data_set <span class="pl-k">import</span> TlseHypDataSet
-                    <span class="pl-k">from</span> tlse_hyp_data_set.utils.dataset <span class="pl-k">import</span> DisjointDataSplit
+                    <span class="pl-k">from</span> TlseHypDataSet.tlse_hyp_data_set <span class="pl-k">import</span> TlseHypDataSet
+                    <span class="pl-k">from</span> TlseHypDataSet.utils.dataset <span class="pl-k">import</span> DisjointDataSplit
 
-                    dataset = <span class="pl-v">TlseHypDataSet</span>(<span class="pl-s">'/path/to/dataset/'</span>)
+                    dataset = <span class="pl-v">TlseHypDataSet</span>(<span class="pl-s">'/path/to/dataset/'</span>, pred_mode=<span class="pl-s">'pixel'</span>, patch_size=<span class="pl-c1">1</span>)
                     <span class="pl-c"># Load the first standard ground truth split</span>
-                    ground_truth_split = <span class="pl-v">DisjointDataSplit</span>(dataset.standard_splits[0])
+                    ground_truth_split = <span class="pl-v">DisjointDataSplit</span>(dataset, split=dataset.standard_splits[0])
                     train_loader = torch.utils.data.<span class="pl-v">DataLoader</span>(ground_truth_split.sets_[<span class="pl-s">'train'</span>], shuffle=<span class="pl-c1">True</span>, batch_size=<span class="pl-c1">1024</span>)
 
                     <span class="pl-k">for</span> epoch <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">100</span>):
                         &nbsp; <span class="pl-k">for</span> samples, labels <span class="pl-c1">in</span> train_loader:
                             &nbsp; &nbsp; ...
             </div>
+            
 
             <h2>Qualitative comparison</h2>
 
             <p>
-                In our <a href="#" target="_blank">paper</a>, we qualitatively compared the data set of Toulouse to two publicly available hyperspectral data sets: <a href="https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes#Pavia_Centre_and_University", target="_blank">Pavia University</a> and <a href="https://hyperspectral.ee.uh.edu/?page_id=1075", target="_blank">Houston University</a>. In particular, we computed spatial and spectral hand-crafted features from 64 x 64 pixel patches, represented in the figure below through a t-SNE 2-dimensional transformation:
+                In our <a href="#" target="_blank">paper</a>, we qualitatively compared the data set of Toulouse to two publicly available hyperspectral data sets: <a href="https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes#Pavia_Centre_and_University", target="_blank">Pavia University</a> and <a href="https://hyperspectral.ee.uh.edu/?page_id=1075", target="_blank">Houston University</a>. In particular, we computed spatial and spectral hand-crafted features from 64 x 64 pixel patches, represented in the figure below through a <a href="https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbcl" target="_blank">t-SNE</a> transformation:
             </p>
 
             <div class="nomenclature">
                 <img src="static/img/proj.png" alt="Nomenclature" class="proj-img"/>
             </div>
+
+            <h2>Download data</h2>
+
+            <p>
+                The hyperspectral image is divided in tiles that can be freely downloaded at <a href="https://camcatt.sedoo.fr/catalogue/" target="_blank">https://camcatt.sedoo.fr/catalogue/</a>.
+                The tiles used by the Toulouse Hyperspectral Data Set are the tiles 1b, 1c, 1d, 1e, 3a, 3d, 3e, 5c, 9c. 
+
+                <br> <br>
+
+                The ground truth is directly included in the <a href="#" target="_blank">Python package</a>. If you do not use it, you can still download the ground truth <a href="#" target="_blank">here</a>.
+            </p>
 
            <h2>Citation</h2>
 
