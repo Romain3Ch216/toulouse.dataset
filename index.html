@@ -39,7 +39,7 @@
             <p>
                 The Toulouse Hyperspectral Data Set is the combination of 1) an airborne hyperspectral image acquired by the AisaFENIX sensor over Toulouse, France, during the <a href="https://www.sciencedirect.com/science/article/pii/S2352340923002287" target="_blank">CAMCATT-AI4GEO campaign</a> and of 2) a land cover ground truth, <b>provided with standard train / test splits for the validation of machine learning models</b> on various tasks such as semantic segmentation. </br> </br>
 
-                The image is provided in ground-level reflectance with <b>a very high spatial resolution (1 m ground sampling distance) and spectral resolution (< 8 nm) from 0.4 µm to 2.5 µm (310 channels).</b>
+                The image is provided in ground-level reflectance with <b>a very high spatial resolution (1 m ground sampling distance) and spectral resolution (< 8 nm) from 0.4 µm to 2.5 µm (310 channels<sup>*</sup>).</b>
 
                 More than <b>380,000 pixels are sparsely labeled with land cover classes</b> (and secondarily with land use classes) over an area of 90 km&#xB2;. The land cover nomenclature contains 32 classes hierarchically organized into 16 impermeable surfaces and 16 permeable surfaces as illustrated below:</br> </br>
             </p>
@@ -47,7 +47,8 @@
             <div class="nomenclature">
                 <img src="static/img/nomenclature.png" alt="Nomenclature" class="nomenclature-img"/>
             </div>
-
+            <br>
+            <p><sup>*</sup>Raw data has 420 spectral channels from which water vapor absorption bands and very noisy bands are removed, resulting in 310 spectral channels. </p>
             <h2>Python package</h2>
 
             <p>
@@ -70,7 +71,7 @@
                             &nbsp; &nbsp; ...
             </div>
 
-            
+
             <h2>Qualitative comparison</h2>
 
             <p>
@@ -78,11 +79,11 @@
             </p>
 
             <div id="download"> </div>
-            
+
             <div class="nomenclature">
                 <img src="static/img/proj.png" alt="dataset_comparison" class="proj-img"/>
             </div>
-            
+
 
             <h2>Download data</h2>
 
@@ -138,4 +139,3 @@
 
     </body>
 </html>
-
